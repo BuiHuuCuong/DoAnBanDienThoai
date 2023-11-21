@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using DoAnBanDienThoai.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<DoAnBanDienThoaiContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DoAnBanDienThoaiContext") ?? throw new InvalidOperationException("Connection string 'DoAnBanDienThoaiContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
