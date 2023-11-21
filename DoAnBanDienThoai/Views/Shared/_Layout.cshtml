@@ -1,49 +1,503 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
+<!-- Mirrored from premium-html-templates.mgtechnologies.co.in/mg-wirez/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Apr 2023 10:26:41 GMT -->
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - DoAnBanDienThoai</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/DoAnBanDienThoai.styles.css" asp-append-version="true" />
+    <title>MG WIREZ</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/assets/libs/bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/libs/fontawesome-free-6.2.1-web/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/libs/slick-1.8.1/slick/slick.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/mg-menu.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/style.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/responsive.css" rel="stylesheet" type="text/css">
+
+    <script src="~/assets/js/jquery-3.6.1.min.js"></script>
+    <script src="~/assets/js/popper.min.js"></script>
+    <script src="~/assets/libs/bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
+    <script src="~/assets/libs/slick-1.8.1/slick/slick.min.js"></script>
+
 </head>
 <body>
+    <!--MG Header Start Here-->
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DoAnBanDienThoai</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+        <div class="mg-header-outer">
+            <div class="container">
+                <div class="row gx-0 gx-md-2 align-items-center">
+                    <div class="col-md-3 col-lg-3 col-5">
+                        <div class="header-logo">
+                            <a class="mg-logo text-decoration-none" href="index.html">MG WIREZ.</a>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-lg-6 col-2 order-3 order-md-0 d-flex d-md-block justify-content-end justify-content-md-start text-end">
+                        <div>
+                            <div class="mg-menu-overlay"></div>
+                            <nav class="mg-menu" id="menu">
+                                <div class="menu-mobile-header">
+                                    <button type="button" class="menu-mobile-arrow"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
+                                    <div class="menu-mobile-title"></div>
+                                    <button type="button" class="menu-mobile-close"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                </div>
+                                <ul class="menu-section mg-menu-outer">
+                                    <li class="menu-item-has-children">
+                                        <a class="active-menu" href="javascript:void(0);">HOME <i class="fa-solid fa-caret-down"></i></a>
+                                        <div class="mg-sub-menu-outer">
+                                            <div class="menu-subs">
+                                                <ul>
+                                                    <li class="sub-menu-active"><a href="index.html">Home 1</a></li>
+                                                    <li><a href="home2.html">Home 2</a></li>
+                                                    <li><a href="home3.html">Home 3</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="menu-item-has-children">
+                                        <a href="javascript:void(0);">SHOP <i class="fa-solid fa-caret-down"></i></a>
+                                        <div class="mg-sub-menu-outer">
+                                            <div class="menu-subs">
+                                                <ul>
+                                                    <li><a href="shop.html">New Arrivals</a></li>
+                                                    <li><a href="shop.html">Top Trending</a></li>
+                                                    <li><a href="shop.html">Winter Collection</a></li>
+                                                    <li><a href="shop.html">Summer Collection</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="menu-item-has-children">
+                                        <a href="javascript:void(0);">PAGES <i class="fa-solid fa-caret-down"></i></a>
+                                        <div class="mg-sub-menu-outer">
+                                            <div class="menu-subs">
+                                                <ul>
+                                                    <li><a href="shop.html">Collection</a></li>
+                                                    <li><a href="single-product.html">Product</a></li>
+                                                    <li><a href="cart.html">Cart</a></li>
+                                                    <li><a href="checkout.html">Checkout</a></li>
+                                                    <li><a href="thank-you.html">Thank you</a></li>
+                                                    <li><a href="profile.html">Profile</a></li>
+                                                    <li><a href="my-orders.html">My orders</a></li>
+                                                    <li><a href="wishlist.html">Wishlist</a></li>
+                                                    <li><a href="/Blog">Blog</a></li>
+                                                    <li><a href="single-blog.html">Single blog</a></li>
+                                                    <li><a href="about-us.html">About us</a></li>
+                                                    <li><a href="privacy-policy.html">Privacy policy</a></li>
+                                                    <li><a href="my-account.html">My account</a></li>
+                                                    <li><a href="login.html">Login/Register</a></li>
+                                                    <li><a href="faq.html">FAQs</a></li>
+                                                    <li><a href="404.html">404 Page</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="menu-item"><a href="/Blog">BLOG</a></li>
+                                    <li class="menu-item"><a href="contact-us.html">CONATCT</a></li>
+                                </ul>
+                            </nav>
+                            <div>
+                                <button type="button" class="menu-mobile-toggle mg-burger-menu-icon">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-3 col-5 text-end">
+                        <div class="row">
+                            <div class="col-12 col-lg-12 col-md-12">
+                                <div class="header-icons-outer">
+                                    <ul>
+                                        <li class="mg-login-box">
+                                            <div class="mg-login">
+                                                <a class="mg-login-link" href="login.html">LOGIN</a> <span>/</span>
+                                                <a class="" href="login.html">SIGNUP</a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a href="wishlist.html">
+                                                <img src="assets/images/icons/heart.svg" alt="">
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="cart.html">
+                                                <img src="assets/images/icons/Icon-feather-shopping-bag.svg" alt=""><span class="mg-header-icon-counter">2</span>
+                                            </a>
+                                        </li>
+                                        <li class="mg-profile-icon">
+                                            <a href="profile.html">
+                                                <img src="assets/images/icons/profile-icon.svg" alt="">
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+        </div>
+        <!--header filter start here-->
+        <div class="mg-header-filter-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-lg-3 col-sm-8 col-8">
+                        <div class="mg-category-filter">
+                            <div class="dropdown">
+                                <a class="mg-dropdown-btn btn btn-dark dropdown-toggle" href="javascript:void(0);" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-bars"></i>
+                                    <span>All Department</span>
+                                </a>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - DoAnBanDienThoai - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                <ul class="dropdown-menu mg-dropdown-list" aria-labelledby="dropdownMenuLink">
+                                    <li>
+                                        <a class="dropdown-item mg-font-style" href="shop.html">
+                                            <i class="fa-solid fa-laptop"></i><span>Laptop</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item mg-font-style" href="shop.html">
+                                            <i class="fa-solid fa-desktop"></i><span>Computer</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item mg-font-style" href="shop.html">
+                                            <i class="fa-solid fa-mobile-screen-button"></i><span>Mobile</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item mg-font-style" href="shop.html">
+                                            <i class="fa-solid fa-tablet-screen-button"></i><span>Tablet</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item mg-font-style" href="shop.html">
+                                            <i class="fa-solid fa-camera-retro"></i><span>Camera</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item mg-font-style" href="shop.html">
+                                            <i class="fa-solid fa-arrow-trend-up"></i><span>Accessories</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item mg-font-style" href="shop.html">
+                                            <i class="fa-solid fa-headphones-simple"></i><span>Headphones</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item mg-font-style" href="shop.html">
+                                            <i class="fa-solid fa-tv"></i><span>Tv & Smart Box</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item mg-font-style" href="shop.html">
+                                            <i class="fa-solid fa-gamepad"></i><span>Video Game</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item mg-font-style" href="shop.html">
+                                            <i class="fa-regular fa-clock"></i><span>Smart Watch</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item mg-font-style" href="shop.html">
+                                            <i class="fa-regular fa-circle"></i><span>Others</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-3 d-none d-md-block">
+                        <div class="mg-search-bar-box">
+                            <div class="mg-search-filed">
+                                <form class="d-flex">
+                                    <div class="mg-search-bar-dropdwon">
+                                        <select class="form-select mg-font-style">
+                                            <option selected>Category</option>
+                                            <option value="Laptop">Laptop</option>
+                                            <option value="Mobile">Mobile</option>
+                                            <option value="Camera">Camera</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                    <input class="form-control" type="text" placeholder="What do you need..." aria-label="Search">
+                                    <button class="btn btn d-flex justify-content-center align-items-center" type="submit">
+                                        <img src="assets/images/icons/Icon-feather-search.svg" alt="">
+                                        <span class="ms-2">Search</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-3 d-none d-md-block">
+                        <div class="mg-contact-box d-flex align-items-center justify-content-end">
+                            <div class="mg-cotact-icon">
+                                <img src="assets/images/icons/headphones.svg" alt="">
+                            </div>
+                            <div class="mg-contact-info">
+                                <div class="mg-contact-info-sub-heading">Call us 24/7</div>
+                                <a href="tel:+911234567890">+1 (234) 456 789</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-4 d-flex d-md-none justify-content-end">
+                        <div class="mg-contact-search-icon">
+                            <div class="mg-mobile-icons">
+                                <a class="mg-mobile-search-icon" href="#" data-bs-toggle="modal" data-bs-target="#search-popup"><img src="assets/images/icons/Icon-feather-search-dark.svg" alt=""></a>
+                            </div>
+                            <div class="mg-mobile-icons">
+                                <a href="tel:+911234567890"><img src="assets/images/icons/headphones.svg" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--header filter end here-->
+    </header>
+    <!--MG Header End Here-->
+    <!-- Search Pop Up -->
+    <div class="modal gx-0 fade mg-search-pop-up" id="search-popup" tabindex="-1" aria-labelledby="search-popup" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close mg-pop-up-close-btn" data-bs-dismiss="modal" aria-label="Close">
+                        <span class="mg-spcb-bar-one"></span>
+                        <span class="mg-spcb-bar-two"></span>
+                    </button>
+                </div>
+                <div class="modal-body align-items-center d-flex">
+                    <div class="mg-search-pop-form-outer w-100">
+                        <div class="search-heading"></div>
+                        <form class="">
+                            <div class="mg-search-bar-dropdwon">
+                                <select class="form-select mg-font-style">
+                                    <option selected>Category</option>
+                                    <option value="Laptop">Laptop</option>
+                                    <option value="Mobile">Mobile</option>
+                                    <option value="Camera">Camera</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <input class="form-control" type="text" placeholder="What do you need..." aria-label="Search">
+                            <button class="btn" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Search Pop Up End Here -->
+    <!--Quick view modal start here-->
+    <div class="modal fade mg-quick-view-modal" id="mg-quick-view-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="mg-close-btn" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                    <div class="mg-product-deatils-section">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12 p-0">
+                                    <div class="mg-product-slider">
+                                        <div class="mg-quick-view-slider">
+                                            <div class="mg-slide-img">
+                                                <img src="assets/images/product-slider/product-slider1.jpg" alt="">
+                                            </div>
+                                            <div class="mg-slide-img">
+                                                <img src="assets/images/product-slider/product-slider1.jpg" alt="">
+                                            </div>
+                                            <div class="mg-slide-img">
+                                                <img src="assets/images/product-slider/product-slider1.jpg" alt="">
+                                            </div>
+                                            <div class="mg-slide-img">
+                                                <img src="assets/images/product-slider/product-slider1.jpg" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="mg-qv-next-pre-btn"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="mg-product-details-box">
+                                        <div class="mg-product-heading">
+                                            <span>Urban P47 Wireless Headphone</span>
+                                        </div>
+                                        <div class="mg-product-rating">
+                                            <div class="mg-rating">
+                                                <span><i class="fa-solid fa-star"></i></span>
+                                                <span><i class="fa-solid fa-star"></i></span>
+                                                <span><i class="fa-solid fa-star"></i></span>
+                                                <span><i class="fa-solid fa-star"></i></span>
+                                                <span><i class="fa-solid fa-star"></i></span>
+                                                <span class="mg-review">(4.7) Reviews</span>
+                                            </div>
+                                        </div>
+                                        <div class="mg-discount-heading">
+                                            <span>Get 40% Discount</span>
+                                        </div>
+                                    </div>
+                                    <div class="mg-product-details-list">
+                                        <div class="mg-price-tax-box">
+                                            <div class="mg-price">
+                                                <span>Price $200.0</span>
+                                            </div>
+                                            <div class="mg-tax-rate">
+                                                <span> (5% Tax Included)</span>
+                                            </div>
+                                        </div>
+                                        <ul>
+                                            <li>Lorem Ipsum is simply dummy text of the printing </li>
+                                            <li>It is a long established fact that a reader</li>
+                                            <li>The point of using Lorem Ipsum The point of using Lorem Ipsum </li>
+                                            <li>It has survived not only five centuries not only five centuries</li>
+                                        </ul>
+                                    </div>
+                                    <div class="mg-feature-option-box">
+                                        <div>
+                                            <div class="mg-selection-title">
+                                                <span>Quantity</span>
+                                            </div>
+                                            <div class="mg-quanitity-option-section d-flex">
+                                                <div class="mg-quanlity-option">
+                                                    <form>
+                                                        <input class="mg-qty-number" value="1" type="text">
+                                                    </form>
+                                                </div>
+                                                <div class="mg-quanlity-option-btn">
+                                                    <button class="mg-qty-plus-btn"><i class="fa-solid fa-plus"></i></button>
+                                                    <button class="mg-qty-minus-btn"><i class="fa-solid fa-minus"></i></button>
+                                                </div>
+                                                <div class="mg-ad-cart-btn ms-3">
+                                                    <a class="mg-shop-btn btn btn-default" href="#">ADD TO CART <i class="fa-solid fa-angle-right"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mg-additional-info">
+                                        <div class="mg-product-details">
+                                            <div class="mg-product-details-text"><strong>SKU:</strong>  <span>APIPAD-16GB</span></div>
+                                            <div class="mg-product-details-text"><strong>Categories:</strong> <span>Smartphone, Electronic</span></div>
+                                            <div class="mg-product-details-text"><strong>Tag:</strong> <span>Electronic</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Quick view modal end here-->
+    @RenderBody()
+    <!--footer section start here-->
+    <footer>
+        <div class="mg-footer-section">
+            <div class="container">
+                <div class='mg-footer-section-inner'>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="mg-footer-bio">
+                                <a class="mg-footer-logo" href="#">MG WIREZ.</a>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                            </div>
+                            <div class="mg-newsletter-outer">
+                                <h6>Subscribe Our Newsletter</h6>
+                                <span>Lorem Ipsum is simply dummy text</span>
+                                <div class="mg-newsletter-inner">
+                                    <form class="d-flex mt-3">
+                                        <input class="form-control" type="search" placeholder="Email address" aria-label="search">
+                                        <button class="btn"><i class="fa-solid fa-angle-right"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mg-footer-link">
+                                        <div class="mg-footer-link-heading">
+                                            <span>Safe Payment</span>
+                                        </div>
+                                        <ul class="list-group">
+                                            <li><a href="javascript:void(0);">In-Store Shop</a></li>
+                                            <li><a href="javascript:void(0);">Brands</a></li>
+                                            <li><a href="javascript:void(0);">Gift Cards</a></li>
+                                            <li><a href="javascript:void(0);">Careers</a></li>
+                                            <li><a href="about-us.html">About Us</a></li>
+                                            <li><a href="javascript:void(0);">Shipping</a></li>
+                                            <li><a href="javascript:void(0);">Return</a></li>
+                                            <li><a href="my-account.html">My Account</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mg-footer-link">
+                                        <div class="mg-footer-link-heading">
+                                            <span>Information</span>
+                                        </div>
+                                        <ul class="list-group">
+                                            <li><a href="javascript:void(0);">Live Chat</a></li>
+                                            <li><a href="javascript:void(0);">Product Guide</a></li>
+                                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                                            <li><a href="javascript:void(0);">Delivery Information</a></li>
+                                            <li><a href="javascript:void(0);">Sales</a></li>
+                                            <li><a href="javascript:void(0);">Term and Conditions</a></li>
+                                            <li><a href="javascript:void(0);">Shopping policy</a></li>
+                                            <li><a href="javascript:void(0);">EMI Payment</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mg-footer-link">
+                                        <div class="mg-footer-link-heading">
+                                            <span>Store</span>
+                                        </div>
+                                        <ul class="list-group">
+                                            <li><a href="javascript:void(0);">Affiliate</a></li>
+                                            <li><a href="javascript:void(0);">Bestseller</a></li>
+                                            <li><a href="javascript:void(0);">Discount</a></li>
+                                            <li><a href="javascript:void(0);">Latest Products</a></li>
+                                            <li><a href="javascript:void(0);">Sales</a></li>
+                                            <li><a href="shop.html">All Collection</a></li>
+                                            <li><a href="wishlist.html">Wishlist</a></li>
+                                            <li><a href="contact-us.html">Contact Us</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Copy right section start here-->
+                <div class="mg-copy-right-section">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-12">
+                            <div class="mg-copy-right-text">
+                                <span>MADE WITH <i class="fa-solid fa-heart"></i> BY <a href="javascript:void(0)';">MG Technologies.</a></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-12">
+                            <div class='mg-payment-option-img'>
+                                <img src="assets/images/gallery/download.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Copy right section end here-->
+            </div>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    <!--footer section end here-->
+    <!--Back To Top Button Start Here-->
+    <div id="back-top" style="display: none;">
+        <a class="text-decoration-none" title="Go to Top" href="#"><i class="fa-solid fa-angles-up"></i></a>
+    </div>
+    <!--Back To Top Button End Here-->
+    <script src="assets/js/mg-menu.js"></script>
+    <script src="assets/js/mg-common.js"></script>
 </body>
+
+<!-- Mirrored from premium-html-templates.mgtechnologies.co.in/mg-wirez/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Apr 2023 10:27:01 GMT -->
 </html>
