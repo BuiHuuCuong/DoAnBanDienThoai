@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+
 namespace DoAnBanDienThoai.Models
 {
-    public class User
+    public class  User
     {
         [Key]
         public int UserID { get; set; }
@@ -12,7 +13,7 @@ namespace DoAnBanDienThoai.Models
         public string? UserEmail { get; set; }
         [Required]
         public string? UserPassword { get; set; }
-        [Required]
         public string? UserRole { get; set; }
+
     }
 }

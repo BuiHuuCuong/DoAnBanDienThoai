@@ -15,5 +15,7 @@ namespace DoAnBanDienThoai.Data
         }
 
         public DbSet<DoAnBanDienThoai.Models.User> User { get; set; } = default!;
+
+        
     }
 }
