@@ -16,6 +16,12 @@ namespace DoAnBanDienThoai.Data
 
         public DbSet<DoAnBanDienThoai.Models.User> User { get; set; } = default!;
 
+        public DbSet<DoAnBanDienThoai.Models.Brand>? Brand { get; set; }
+
+        public DbSet<DoAnBanDienThoai.Models.Category>? Category { get; set; }
+
+        public DbSet<DoAnBanDienThoai.Models.Product>? Product { get; set; }
+
         
     }
 }
