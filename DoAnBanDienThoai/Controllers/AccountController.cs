@@ -115,7 +115,7 @@ namespace DoAnBanDienThoai.Controllers
                     authProperties);
                 GlobalVariables.MyGlobalVariable = true;
                 GlobalVariables.CurrentPrinciple = claimsPrincipal;
-                return RedirectToAction("Index", "Account");
+                return RedirectToAction("Index", "Home");
 
             }
             return View();
@@ -146,7 +146,7 @@ namespace DoAnBanDienThoai.Controllers
                 _context.Add(user);
                 user.UserRole = "Customer";
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Login","Account");
             }
             return View(user);
         }
