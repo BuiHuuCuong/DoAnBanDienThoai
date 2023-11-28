@@ -1,0 +1,14 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<DoAnBanDienThoai.Models.Brand>
+@foreach (var item in Model)
+{
+    <li>
+        <a class="dropdown-item mg-font-style" href="/Products/ProductByBrand?brID=@item.BrandId">
+            <span>@item.BrandName</span>
+        </a>
+    </li>
+}
