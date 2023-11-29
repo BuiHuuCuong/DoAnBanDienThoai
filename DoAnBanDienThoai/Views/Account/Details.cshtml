@@ -1,0 +1,178 @@
+﻿@{
+    ViewData["Title"] = "AccountDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model DoAnBanDienThoai.Models.User
+@using System.Security.Claims;
+@{
+    var identity = (ClaimsPrincipal)GlobalVariables.CurrentPrinciple;
+    var UrId = identity.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier)
+    .Select(c => c.Value).SingleOrDefault();
+}
+<html lang="en">
+<body>
+    <!--page header start here-->
+    <div class="mg-page-header-section5 mg-page-header-style">
+        <div class="mg-page-header-inner">
+            <div class="container">
+                <div class="mg-page-header-text">
+                    <div class="mg-page-header-heading">
+                        <h3>My Account</h3>
+                    </div>
+                    <div class="mg-breadcrumb">
+                        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a class="text-decoration-none" href="index.html">Home</a></li>
+                                <li class="breadcrumb-item active">My Account</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--page header end here-->
+    <!--my account form section start here-->
+    <div class="mg-account-form-section">
+        <div class="container">
+            <div class="mg-account-form-inner">
+                <div class="mg-account-form-heading">
+                    <span>Account Details</span>
+                </div>
+                <form asp-action="Details" method="post" name="Acc_detail">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="UserID" />
+                    <input type="hidden" asp-for="UserRole" />
+                    <div class="mg-form-main">
+                    </div>
+                    <div class="mg-form-main2">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mg-form-input-field">
+                                    <div class="mg-form-sub-heading">
+                                        <span>User Name</span>
+                                    </div>
+                                    @*<input type="text" placeholder="First Name">*@
+                                    <input name="UserName" asp-for="UserName" type="text" id="UserName" class="form-control" />
+                                    <span asp-validation-for="UserName"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="mg-form-sub-heading">
+                                    <span>Email Address</span>
+                                </div>
+                                <div class="mg-form-input-field">
+                                    @*<input type="text" placeholder="Email Address">*@
+                                    <input name="UserEmail" asp-for="UserEmail" type="text" id="UserEmail" class="form-control" />
+                                    <span asp-validation-for="UserEmail"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mg-form-sub-heading">
+                            <span>Password Change</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="mg-form-input-field">
+                                    <input type="text" placeholder="Current password" id="current_pass">
+                                </div>
+                            </div>
+
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mg-form-input-field">
+                                    @*<input type="text" placeholder="New password">*@
+                                    <input name="password" type="text" id="password" class="form-control" placeholder="New password">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mg-form-input-field">
+                                    <input name="UserPassword" type="text" id="confirmed_pass" class="form-control" placeholder="Confirme password">
+                                    <span id='message'></span>
+                                </div>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            var current_passw = @Model.UserPassword;
+                            $('#password, #confirmed_pass, #current_pass').on('keyup', function () {
+                                if ($('#current_pass').val() != current_passw) {
+                                    document.getElementById("change_detail").disabled = true;
+                                    $('#message').html('Current password does not match');
+                                }
+                                else if ($('#password').val() == $('#confirmed_pass').val()) {
+                                    $('#message').html('Valid');
+                                    document.getElementById("change_detail").disabled = false;
+                                } else {
+                                    document.getElementById("change_detail").disabled = true;
+                                    $('#message').html('New password does not match');
+                                }
+                            });
+                            
+                        </script>
+                        <div class="mg-form-submit-btn">
+                            <button onclick="check" id="change_detail" type="submit" value="Save" class="btn">
+                                SAVE CHANGES
+                                <i class="fa-solid fa-angle-right" onclick="location.href='@Url.Action("Details", "Account")'"> </i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--my account form section end here-->
+    <!--Feature section 2 start here-->
+    <div class="mg-feature-section-style2 mg-padding-lr">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-3 col-sm-6 mt-4 mg-feature-service">
+                    <div class="mg-feature-box">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <img src="~/assets/images/icons/Icon-material-payment.svg" alt="">
+                                <h6 class="card-title">Worldwide Delivery</h6>
+                                <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 col-sm-6 mt-4 mg-feature-service">
+                    <div class="mg-feature-box">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <img src="~/assets/images/icons/Icon-feather-shopping-bag.svg" alt="">
+                                <h6 class="card-title">24/7 Help Center</h6>
+                                <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 col-sm-6 mt-4 mg-feature-service">
+                    <div class="mg-feature-box">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <img src="~/assets/images/icons/delivery-truck.svg" alt="">
+                                <h6 class="card-title">Secure Checkout</h6>
+                                <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 col-sm-6 mt-4 mg-feature-service">
+                    <div class="mg-feature-box">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <img src="~/assets/images/icons/Icon-ionic-ios-timer.svg" alt="">
+                                <h6 class="card-title">30 Days Return</h6>
+                                <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Feature section 2 end here-->
+</body>
+<!-- Mirrored from premium-html-templates.mgtechnologies.co.in/mg-wirez/my-account.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Apr 2023 10:27:36 GMT -->
+</html>

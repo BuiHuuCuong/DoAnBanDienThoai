@@ -1,0 +1,16 @@
+﻿@model IEnumerable<DoAnBanDienThoai.Models.Category>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@foreach (var item in Model)
+{
+    @if (item.Products != null)
+    {
+        <li class="list-group-item"><a href="/Products/ProductByCategory?catId=@item.CategoryId">@item.CategoryName (@item.Products.ToList().Count)</a></li>
+    }
+    else
+    {
+        <li class="list-group-item"><a href="/Products/ProductByCategory?catId=@item.CategoryId">@item.CategoryName (0)</a></li>
+    }
+
+}

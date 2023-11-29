@@ -115,7 +115,11 @@ namespace DoAnBanDienThoai.Controllers
                     authProperties);
                 GlobalVariables.MyGlobalVariable = true;
                 GlobalVariables.CurrentPrinciple = claimsPrincipal;
-                return RedirectToAction("Index", "Home");
+                
+                if(_user.UserRole.Equals("Administrator"))
+                    return RedirectToAction("Index", "Admin");
+                else
+                    return RedirectToAction("Index", "Home");
 
             }
             return View();

@@ -1,0 +1,26 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<DoAnBanDienThoai.Models.Category>
+@{
+}
+<div class="mg-search-bar-box">
+    <div class="mg-search-filed">
+        <form asp-controller="Products" asp-action="ProductByCategory" class="d-flex">
+            <div class="mg-search-bar-dropdwon">
+                <select name="catid" class="form-select mg-font-style">
+                    <option value="0" style="display: none" selected>Category</option>
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.CategoryId">@item.CategoryName</option>
+                    }
+                </select>
+            </div>
+            <input class="form-control" name="keywords" type="text" placeholder="What do you need..." aria-label="Search">
+            <button class="btn btn d-flex justify-content-center align-items-center" type="submit">
+                <img src="~/assets/images/icons/Icon-feather-search.svg" alt="">
+                <span class="ms-2">Search</span>
+            </button>
+        </form>
+    </div>
+</div>

@@ -22,8 +22,46 @@ namespace DoAnBanDienThoai.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var doAnBanDienThoaiContext = _context.Product.Include(p => p.Brand).Include(p => p.Category);
-            return View(await doAnBanDienThoaiContext.ToListAsync());
+            var DoAnBanDienThoaiContext = _context.Product.Include(p => p.Brand).Include(p => p.Category);
+            return View(await DoAnBanDienThoaiContext.ToListAsync());
+        }
+        // Search
+        [HttpPost]
+        public async Task<IActionResult> ProductByCategory(int catid, string keywords)
+        {
+            var DoAnBanDienThoaiContext = _context.Product.Include(p => p.Brand).Include(p => p.Category).Where(p => p.ProductName.Contains(keywords) && p.CategoryId == catid);
+            return View(await DoAnBanDienThoaiContext.ToListAsync());
+        }
+        // List Category Group
+        public async Task<IActionResult> ProductByCategory(int catID)
+        {
+            var DoAnBanDienThoaiContext = _context.Product.Include(p => p.Brand).Include(p => p.Category).Where(p => p.CategoryId == catID);
+            return View(await DoAnBanDienThoaiContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> ProductByBrand(int brID)
+        {
+            var DoAnBanDienThoaiContext = _context.Product.Include(p => p.Brand).Include(p => p.Category).Where(p => p.BrandId == brID);
+            return View(await DoAnBanDienThoaiContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> ProductDetails(int? id)
+        {
+            if (id == null || _context.Product == null)
+            {
+                return NotFound();
+            }
+
+            var product = await _context.Product
+                .Include(p => p.Brand)
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(m => m.ProductId == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
         }
 
         // GET: Products/Details/5
