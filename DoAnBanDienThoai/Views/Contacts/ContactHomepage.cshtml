@@ -1,4 +1,9 @@
-﻿<!--page header start here-->
+﻿@model IEnumerable<DoAnBanDienThoai.Models.Contact>
+@{
+    ViewData["Title"] = "ContactHomepage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!--page header start here-->
 <div class="mg-page-header-section8 mg-page-header-style">
     <div class="mg-page-header-inner">
         <div class="container">
@@ -42,7 +47,7 @@
                             <h5>Email Address</h5>
                             <div><a href="#"><span>cuongbh20@uef.edu.vn</span></a></div>
                             <div><a href="#"><span>tuanmpa20@uef.edu.vn</span></a></div>
-                        </div>                    
+                        </div>
                     </div>
                 </div>
             </div>
@@ -52,7 +57,7 @@
                         <h5>FeedBack</h5>
                         <div>
                             <p>
-                               
+
                             </p>
                         </div>
                     </div>
@@ -64,7 +69,7 @@
                                         <input type="text" name="first_name" placeholder="FullName*">
                                     </div>
                                 </div>
-                               
+
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <div class="mg-form-input-field">
                                         <input type="text" name="email" placeholder="Email Address*">

@@ -3,6 +3,7 @@ using DoAnBanDienThoai.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DoAnBanDienThoai.Migrations
 {
     [DbContext(typeof(DoAnBanDienThoaiContext))]
-    partial class DoAnBanDienThoaiContextModelSnapshot : ModelSnapshot
+    [Migration("20231204063613_userchangetypedata")]
+    partial class userchangetypedata
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,39 +57,6 @@ namespace DoAnBanDienThoai.Migrations
                     b.HasKey("CategoryId");
 
                     b.ToTable("Category");
-                });
-
-            modelBuilder.Entity("DoAnBanDienThoai.Models.Contact", b =>
-                {
-                    b.Property<int>("ContactID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContactID"), 1L, 1);
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserPhone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ContactID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("Contact");
                 });
 
             modelBuilder.Entity("DoAnBanDienThoai.Models.Product", b =>
@@ -161,15 +130,6 @@ namespace DoAnBanDienThoai.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("DoAnBanDienThoai.Models.Contact", b =>
-                {
-                    b.HasOne("DoAnBanDienThoai.Models.User", null)
-                        .WithMany("Contact")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("DoAnBanDienThoai.Models.Product", b =>
                 {
                     b.HasOne("DoAnBanDienThoai.Models.Brand", "Brand")
@@ -197,11 +157,6 @@ namespace DoAnBanDienThoai.Migrations
             modelBuilder.Entity("DoAnBanDienThoai.Models.Category", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("DoAnBanDienThoai.Models.User", b =>
-                {
-                    b.Navigation("Contact");
                 });
 #pragma warning restore 612, 618
         }

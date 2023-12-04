@@ -22,6 +22,8 @@ namespace DoAnBanDienThoai.Data
 
         public DbSet<DoAnBanDienThoai.Models.Product>? Product { get; set; }
 
+        public DbSet<DoAnBanDienThoai.Models.Contact>? Contact { get; set; }
+
         
     }
 }
