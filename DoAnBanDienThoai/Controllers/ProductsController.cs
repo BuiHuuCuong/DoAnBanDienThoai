@@ -29,7 +29,8 @@ namespace DoAnBanDienThoai.Controllers
         [HttpPost]
         public async Task<IActionResult> ProductByCategory(int catid, string keywords)
         {
-            var DoAnBanDienThoaiContext = _context.Product.Include(p => p.Brand).Include(p => p.Category).Where(p => p.ProductName.Contains(keywords) && p.CategoryId == catid);
+            var DoAnBanDienThoaiContext = _context.Product.Include(p => p.Brand)
+                .Include(p => p.Category).Where(p => p.ProductName.Contains(keywords) && p.CategoryId == catid);
             return View(await DoAnBanDienThoaiContext.ToListAsync());
         }
         // List Category Group

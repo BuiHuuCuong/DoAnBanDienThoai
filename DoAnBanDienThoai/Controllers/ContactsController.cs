@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DoAnBanDienThoai.Data;
 using DoAnBanDienThoai.Models;
+using System.Security.Claims;
+
 
 namespace DoAnBanDienThoai.Controllers
 {
@@ -23,6 +25,7 @@ namespace DoAnBanDienThoai.Controllers
         public async Task<IActionResult> Index()
         {
             var doAnBanDienThoaiContext = _context.Contact.Include(c => c.User);
+
             return View(await doAnBanDienThoaiContext.ToListAsync());
         }
 
@@ -46,9 +49,12 @@ namespace DoAnBanDienThoai.Controllers
         }
 
         // GET: Contacts/Create
-        public IActionResult Create()
+        public IActionResult ContactHomepage()
         {
-            ViewData["UserID"] = new SelectList(_context.User, "UserID", "UserEmail");
+            //ViewData["UserID"] = new SelectList(_context.User, "UserID", "UserEmail");
+            //ViewData["UserId"] = User.Identity.Name;
+            ViewBag.UserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewData["Date"] = DateTime.Now;
             return View();
         }
 
@@ -57,13 +63,12 @@ namespace DoAnBanDienThoai.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContactID,UserID,UserPhone,Content,CreatedDate")] Contact contact)
+        public async Task<IActionResult> ContactHomepage([Bind("ContactID,UserID,UserPhone,Content,CreatedDate")] Contact contact)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(contact);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
             ViewData["UserID"] = new SelectList(_context.User, "UserID", "UserEmail", contact.UserID);
             return View(contact);
@@ -164,10 +169,10 @@ namespace DoAnBanDienThoai.Controllers
         {
           return (_context.Contact?.Any(e => e.ContactID == id)).GetValueOrDefault();
         }
-        public IActionResult ContactHomepage()
-        {
-            return View();
+        //public IActionResult ContactHomepage()
+        //{
+        //    return View();
 
-        }
+        //}
     }
 }
