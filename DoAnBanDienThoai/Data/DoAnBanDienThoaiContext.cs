@@ -9,6 +9,10 @@ namespace DoAnBanDienThoai.Data
 {
     public class DoAnBanDienThoaiContext : DbContext
     {
+        public DoAnBanDienThoaiContext()
+        {
+        }
+
         public DoAnBanDienThoaiContext (DbContextOptions<DoAnBanDienThoaiContext> options)
             : base(options)
         {

@@ -22,9 +22,8 @@ namespace DoAnBanDienThoai.Controllers
         // GET: Contacts
         public async Task<IActionResult> Index()
         {
-              return _context.Contact != null ? 
-                          View(await _context.Contact.ToListAsync()) :
-                          Problem("Entity set 'DoAnBanDienThoaiContext.Contact'  is null.");
+            var doAnBanDienThoaiContext = _context.Contact.Include(c => c.User);
+            return View(await doAnBanDienThoaiContext.ToListAsync());
         }
 
         // GET: Contacts/Details/5
@@ -36,6 +35,7 @@ namespace DoAnBanDienThoai.Controllers
             }
 
             var contact = await _context.Contact
+                .Include(c => c.User)
                 .FirstOrDefaultAsync(m => m.ContactID == id);
             if (contact == null)
             {
@@ -48,6 +48,7 @@ namespace DoAnBanDienThoai.Controllers
         // GET: Contacts/Create
         public IActionResult Create()
         {
+            ViewData["UserID"] = new SelectList(_context.User, "UserID", "UserEmail");
             return View();
         }
 
@@ -56,7 +57,7 @@ namespace DoAnBanDienThoai.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContactID,UserID,UserName,UserEmail,UserPhone,Content")] Contact contact)
+        public async Task<IActionResult> Create([Bind("ContactID,UserID,UserPhone,Content,CreatedDate")] Contact contact)
         {
             if (ModelState.IsValid)
             {
@@ -64,6 +65,7 @@ namespace DoAnBanDienThoai.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UserID"] = new SelectList(_context.User, "UserID", "UserEmail", contact.UserID);
             return View(contact);
         }
 
@@ -80,6 +82,7 @@ namespace DoAnBanDienThoai.Controllers
             {
                 return NotFound();
             }
+            ViewData["UserID"] = new SelectList(_context.User, "UserID", "UserEmail", contact.UserID);
             return View(contact);
         }
 
@@ -88,7 +91,7 @@ namespace DoAnBanDienThoai.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ContactID,UserID,UserName,UserEmail,UserPhone,Content")] Contact contact)
+        public async Task<IActionResult> Edit(int id, [Bind("ContactID,UserID,UserPhone,Content,CreatedDate")] Contact contact)
         {
             if (id != contact.ContactID)
             {
@@ -115,6 +118,7 @@ namespace DoAnBanDienThoai.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UserID"] = new SelectList(_context.User, "UserID", "UserEmail", contact.UserID);
             return View(contact);
         }
 
@@ -127,6 +131,7 @@ namespace DoAnBanDienThoai.Controllers
             }
 
             var contact = await _context.Contact
+                .Include(c => c.User)
                 .FirstOrDefaultAsync(m => m.ContactID == id);
             if (contact == null)
             {
@@ -159,12 +164,10 @@ namespace DoAnBanDienThoai.Controllers
         {
           return (_context.Contact?.Any(e => e.ContactID == id)).GetValueOrDefault();
         }
-
-        // asp-action: ContactHomepage
-        // Purpose: Return to homepage user when they add something
         public IActionResult ContactHomepage()
         {
             return View();
+
         }
     }
 }

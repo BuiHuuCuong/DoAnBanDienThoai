@@ -8,17 +8,15 @@ namespace DoAnBanDienThoai.Models
     {
         [Key]
         public int ContactID { get; set; }
-        [ForeignKey("UserID")]
+       
+        [ForeignKey("UserID")] 
         public int UserID { get; set; }
-
-        [Required]
-        public string? UserName { get; set; }
-        [Required]
-        public string? UserEmail { get; set; }
+        public User? User { get; set; }
         
+        [Required]
         public string? UserPhone { get; set; }
         [Required]
         public string? Content { get; set; }
-        
+        public DateTime? CreatedDate { get; set; }
     }
 }

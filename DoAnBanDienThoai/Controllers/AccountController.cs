@@ -144,7 +144,7 @@ namespace DoAnBanDienThoai.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignUp([Bind("UserID,UserName,UserEmail,UserPassword,UserRole")] User user)
-        {
+        {   
             if (ModelState.IsValid)
             {
                 _context.Add(user);
