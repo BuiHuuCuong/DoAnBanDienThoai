@@ -28,6 +28,8 @@ namespace DoAnBanDienThoai.Data
 
         public DbSet<DoAnBanDienThoai.Models.Contact>? Contact { get; set; }
 
-        
+        public DbSet<DoAnBanDienThoai.Models.CartItem>? CartItem { get; set; }
+
+
     }
 }

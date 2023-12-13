@@ -1,0 +1,131 @@
+﻿@using System.Globalization;
+@model DoAnBanDienThoai.Models.ViewModels.CartViewModel;
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mg-page-header-section6 mg-page-header-style">
+    <div class="mg-page-header-inner">
+        <div class="container">
+            <div class="mg-page-header-text">
+                <div class="mg-page-header-heading">
+                    <h3>Shopping Cart</h3>
+                </div>
+                <div class="mg-breadcrumb">
+                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a class="text-decoration-none" href="index.html">Home</a></li>
+                            <li class="breadcrumb-item active">Cart</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--page header end here-->
+<!--cart section start here-->
+<form method="post">
+    <div class="mg-cart-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="mg-cart-product-details" onload="UpdateTotalAmount()">
+                        <div class="mg-cpd-heading">
+                            <span id="item_cnt"></span>
+                            <span> Items in your cart</span>
+                        </div>
+                        <script>
+                            function UpdateTotalAmount() {
+                                document.getElementById('item_cnt').innerHTML = @Model.CartItems.Sum(item => item.Quantity);
+                            }
+                        </script>
+                        <div class="mg-cpd-table table-responsive">
+                            <!--check if there any item in cart-->
+                            @if (Model.CartItems.Count > 0)
+                            {
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>PRODUCTS DETAILS</th>
+                                            <th>QUANTITY</th>
+                                            <th>PRICE</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--display every item in cart-->
+                                        @foreach (var item in Model.CartItems)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div class="mg-product-img-qyt">
+                                                        <div class="mg-cpd-img">
+                                                            <a href="#"><img src="@item.Image" alt=""></a>
+                                                        </div>
+                                                        <div class="mg-cpd-qty">
+                                                            <a href="/Products/ProductDetails?id=@item.ProductId"><span>@item.ProductName</span></a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="mg-quanitity-option-section d-flex">
+                                                        <div class="mg-quanlity-option">
+                                                            <input type="text" class="mg-qty-number" value="@item.Quantity" name="val_update" id="val_update">
+                                                        </div>
+                                                        <div class="mg-quanlity-option-btn">
+                                                            <button asp-controller="Cart" asp-action="Add" asp-route-id="@item.ProductId"><i class="fa-solid fa-plus"></i></button>
+                                                            <button asp-controller="Cart" asp-action="Decrease" asp-route-id="@item.ProductId"><i class="fa-solid fa-minus"></i></button>
+                                                        </div>
+
+                                                    </div>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <div class="mg-cpd-price">
+                                                        <span>@Model.CartItems.Where(x => x.ProductId == item.ProductId).Sum(x => x.Quantity * x.Price).ToString("C", GlobalVariables.cul)</span>
+                                                    </div>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <div class="mg-quanitity-option-section-1">
+                                                        @*<a asp-controller="Cart" asp-action="Remove" asp-route-id="@item.ProductId" class="mg-product-remove-btn"><img src="~/assets/images/icons/cart-product-remove.svg"></a>
+                                                <button asp-controller="Cart" asp-action="Remove" asp-route-id="@item.ProductId">/button>*@
+                                                        <button asp-controller="Cart" asp-action="Remove" asp-route-id="@item.ProductId"><img src="~/assets/images/icons/cart-product-remove.svg"></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="mg-cart-price-deatils">             
+                        <div class="mg-cart-total-price">
+                            <div class="mg-total-heading">
+                                <h5>Total</h5>
+                                <span>(Tax Included)</span>
+                            </div>
+                            <span class="mg-grand-total-price">@Model.GrandTotal.ToString("C", GlobalVariables.cul)</span>
+                        </div>
+                        <div class="mg-checkout-btn">
+                            <a class="btn" href="/Cart/CartCheckout">PROCEED TO CHECKOUT</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<!--cart section end here-->
+<!--related products start here-->
+<div class="mg-related-product-section">
+
+</div>
+<!--related products end here-->
