@@ -27,6 +27,7 @@ namespace DoAnBanDienThoai.Controllers
             {
                 CartItems = cart,
                 GrandTotal = cart.Sum(x => x.Quantity * x.Price)
+
             };
 
             return View(cartVM);
@@ -34,10 +35,17 @@ namespace DoAnBanDienThoai.Controllers
 
         public IActionResult CartCheckout()
         {
-            dynamic Ck_out = new ExpandoObject();
-            Ck_out.User = _context.User;
-            Ck_out.CartItem = _context.CartItem;
-            return View(Ck_out);
+            List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart") ?? new List<CartItem>();
+
+            // Todo: Tao mot bien danh sach List<Order> order = ???? (_await.)
+
+            OrderViewModel cartVM = new()
+            {
+                CartItems = cart,
+                GrandTotal = cart.Sum(x => x.Quantity * x.Price)
+            };
+
+            return View(cartVM);
         }
 
         public IActionResult SaveOrder()

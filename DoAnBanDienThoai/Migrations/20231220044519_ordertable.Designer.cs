@@ -4,6 +4,7 @@ using DoAnBanDienThoai.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DoAnBanDienThoai.Migrations
 {
     [DbContext(typeof(DoAnBanDienThoaiContext))]
-    partial class DoAnBanDienThoaiContextModelSnapshot : ModelSnapshot
+    [Migration("20231220044519_ordertable")]
+    partial class ordertable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -131,10 +133,6 @@ namespace DoAnBanDienThoai.Migrations
 
                     b.Property<int>("CartItemId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("OrderDate")
                         .HasColumnType("datetime2");

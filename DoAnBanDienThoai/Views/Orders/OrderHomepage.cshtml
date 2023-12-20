@@ -1,0 +1,141 @@
+﻿@model DoAnBanDienThoai.Models.Order
+
+@{
+    ViewData["Title"] = "OrderHomepage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--page header start here-->
+<div class="mg-page-header-section6 mg-page-header-style mg-margin-bottom-0">
+    <div class="mg-page-header-inner">
+        <div class="container">
+            <div class="mg-page-header-text">
+                <div class="mg-page-header-heading">
+                    <h3>Checkout</h3>
+                </div>
+                <div class="mg-breadcrumb">
+                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a class="text-decoration-none" href="index.html">Home</a></li>
+                            <li class="breadcrumb-item active">Checkout</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--page header end here-->
+<!--checkout tab section start here-->
+<div class="mg-checkout-tab">
+    <div class="mg-tabs-section">
+        <div class="container">
+            <div class="mg-tabs-box mt-3">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="Featured-tab" data-bs-toggle="tab" data-bs-target="#Featured" type="button" role="tab" aria-controls="Featured" aria-selected="true">ADD INFORMATION</button>
+                    </li>
+
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="Featured" role="tabpanel" aria-labelledby="Featured">
+                        <div class="mg-checkout-tab-content1">
+                            <div class="mg-co-form">
+                                <div class="mg-co-form-heading">
+                                    <h5>Add Information</h5>
+                                </div>
+                                <form>
+                                    <div class="mg-form-main">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <input type="hidden" asp-for="UserID" class="form-control" value="@ViewBag.UserID">
+                                                <input type="hidden" asp-for="OrderDate" class="form-control" value="@ViewData["Date"]">
+                                                <input type="hidden" asp-for="CartItemId" class="form-control" value="@ViewBag.CartItemId">
+                                                <div class="mg-form-input-field">
+                                                    <label asp-for="Email" class="control-label"></label>
+                                                    <input asp-for="Email" class="form-control" />
+                                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="mg-form-input-field">
+                                                    <label asp-for="Address" class="control-label"></label>
+                                                    <input asp-for="Address" class="form-control" />
+                                                    <span asp-validation-for="Address" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mg-form-main2">
+                                        <div class="row">
+
+
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <div class="mg-form-input-field">
+                                                    <label asp-for="Phone" class="control-label"></label>
+                                                    <input asp-for="Phone" class="form-control" />
+                                                    <span asp-validation-for="Phone" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="mg-form-submit-btn">
+                                <a href="/Cart/Thankyou" </a>
+                                <button type="submit" class="btn">CONFIRM</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Top-rated" role="tabpanel">
+                        <div class="mg-checkout-tab-content2">
+                            <div class="mg-co-form">
+                                <form>
+                                    <div class="mg-form-main">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="mg-form-textarea">
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                        Order notes(Optional)
+                                                    </label>
+                                                    <textarea placeholder="Note about your order, e.g special note for delivery"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="mg-co-add-more-info">
+                                <a href="javascript:void(0);" onclick="$('#Bestseller-tab').tab('show');">View Order <i class="fa-solid fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Bestseller" role="tabpanel">
+                        <div class="mg-checkout-tab-content3">
+                            <div class="mg-co-order-details">
+                                <div class="mg-co-order-details-heading">
+                                    <h5>Your order</h5>
+                                </div>
+                                <div class="mg-co-order-table">
+                                    <div class="mg-cpd-table table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                            </thead>
+                                            <tbody>                                            
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mg-co-add-more-info">
+                                <a href="/Cart/Thankyou">Place Your Order <i class="fa-solid fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--checkout tab section end here-->

@@ -30,6 +30,8 @@ namespace DoAnBanDienThoai.Data
 
         public DbSet<DoAnBanDienThoai.Models.CartItem>? CartItem { get; set; }
 
+        public DbSet<DoAnBanDienThoai.Models.Order>? Order { get; set; }
+
 
     }
 }

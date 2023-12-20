@@ -20,6 +20,7 @@ namespace DoAnBanDienThoai.Models
         public string? UserPassword { get; set; }
         public string? UserRole { get; set; }
         public ICollection<Contact>? Contact { get; set; }
+        public ICollection<Order>? Order { get; set; }
 
     }
 }

@@ -51,8 +51,6 @@ namespace DoAnBanDienThoai.Controllers
         // GET: Contacts/Create
         public IActionResult ContactHomepage()
         {
-            //ViewData["UserID"] = new SelectList(_context.User, "UserID", "UserEmail");
-            //ViewData["UserId"] = User.Identity.Name;
             ViewBag.UserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewData["Date"] = DateTime.Now;
             return View();
@@ -169,10 +167,6 @@ namespace DoAnBanDienThoai.Controllers
         {
           return (_context.Contact?.Any(e => e.ContactID == id)).GetValueOrDefault();
         }
-        //public IActionResult ContactHomepage()
-        //{
-        //    return View();
 
-        //}
     }
 }

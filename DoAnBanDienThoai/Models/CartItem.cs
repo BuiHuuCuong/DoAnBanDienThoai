@@ -26,6 +26,7 @@
             Quantity = 1;
             Image = product.ProductImage;
         }
+        public ICollection<Order>? Order { get; set; }
 
     }
 }
