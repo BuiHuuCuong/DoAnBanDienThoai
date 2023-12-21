@@ -13,10 +13,8 @@ namespace DoAnBanDienThoai.Models
         [ForeignKey("UserID")]
         public int UserID { get; set; }
         public User? User { get; set; }
-
-        [ForeignKey("CartItemId")]
-        public int CartItemId { get; set; }
-        public CartItem? CartItem { get; set; }
+        [Required]
+        public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
         [Required]
         public string? Email { get; set; }
 
@@ -34,11 +32,15 @@ namespace DoAnBanDienThoai.Models
 
         public Order(Product product)
         {
-            CartItem.ProductId = product.ProductId;
-            CartItem.ProductName = product.ProductName;
-            CartItem.Price = product.ProductPrice;
-            CartItem.Quantity = 1;
-            CartItem.Image = product.ProductImage;
+            CartItem newCartItem = new CartItem
+            {
+                ProductId = product.ProductId,
+                ProductName = product.ProductName,
+                Price = product.ProductPrice,
+                Quantity = 1,
+                Image = product.ProductImage
+            };
+            CartItems.Add(newCartItem);
         }
     }
 }

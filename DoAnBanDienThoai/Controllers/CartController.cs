@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Dynamic;
+using System.Security.Claims;
 
 namespace DoAnBanDienThoai.Controllers
 {
@@ -37,7 +38,7 @@ namespace DoAnBanDienThoai.Controllers
         {
             List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart") ?? new List<CartItem>();
 
-            // Todo: Tao mot bien danh sach List<Order> order = ???? (_await.)
+
 
             OrderViewModel cartVM = new()
             {
@@ -48,8 +49,22 @@ namespace DoAnBanDienThoai.Controllers
             return View(cartVM);
         }
 
-        public IActionResult SaveOrder()
+        public async Task<IActionResult> SaveOrder(OrderViewModel.orderDTO orderViewModel)
         {
+            List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart") ?? new List<CartItem>();
+            var _user = _context.User.Where(m => m.UserEmail == orderViewModel.Email).FirstOrDefault();
+            Order newOrder = new Order()
+            {
+                Address = orderViewModel.Address,
+                Email = orderViewModel.Email,
+                Phone = orderViewModel.Phone,
+                Total = cart.Sum(x => x.Quantity * x.Price),       
+                CartItems = cart,
+                User = _user,
+                OrderDate = DateTime.Now
+            };
+            _context.Add(newOrder);
+            await _context.SaveChangesAsync();
             return View();
         }
 

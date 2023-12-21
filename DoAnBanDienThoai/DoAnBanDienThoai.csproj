@@ -8,9 +8,17 @@
 
   <ItemGroup>
     <Compile Remove="Views\NewFolder\**" />
+    <Compile Remove="Views\Orders\**" />
     <Content Remove="Views\NewFolder\**" />
+    <Content Remove="Views\Orders\**" />
     <EmbeddedResource Remove="Views\NewFolder\**" />
+    <EmbeddedResource Remove="Views\Orders\**" />
     <None Remove="Views\NewFolder\**" />
+    <None Remove="Views\Orders\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Orders\CartCheckout.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
