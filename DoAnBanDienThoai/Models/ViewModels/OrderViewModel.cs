@@ -9,9 +9,15 @@
 
         public class orderDTO
         {
+            //public int UserID { get; set; }
+           // public int OrderID { get; set; }
             public string? Address { get; set; }
             public string? Email { get; set; }
             public string? Phone { get; set; }
+
+            public DateTime? OrderDate { get; set; }
+            public decimal? Total { get; set; }
+
         }
 
     }

@@ -1,8 +1,135 @@
-﻿
+﻿@model Order
+
 @{
-    ViewData["Title"] = "CartCheckout";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>CartCheckout</h1>
+<!--page header start here-->
+<div class="mg-page-header-section6 mg-page-header-style mg-margin-bottom-0">
+    <div class="mg-page-header-inner">
+        <div class="container">
+            <div class="mg-page-header-text">
+                <div class="mg-page-header-heading">
+                    <h3>Checkout</h3>
+                </div>
+                <div class="mg-breadcrumb">
+                    <nav style="--bs-breadcrumb-divider:'>';" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a class="text-decoration-none" href="index.html">Home</a></li>
+                            <li class="breadcrumb-item active">Checkout</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--page header end here-->
+<!--checkout tab section start here-->
+<div class="mg-checkout-tab">
+    <div class="mg-tabs-section">
+        <div class="container">
+            <div class="mg-tabs-box mt-3">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="Featured-tab" data-bs-toggle="tab" data-bs-target="#Featured" type="button" role="tab" aria-controls="Featured" aria-selected="true">ADD INFORMATION</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="Bestseller-tab" data-bs-toggle="tab" data-bs-target="#Bestseller" type="button" role="tab" aria-controls="Bestseller" aria-selected="false">PLACE YOUR ORDER</button>
+                    </li>
+                </ul>
+                <form asp-action="CartCheckout" asp-controller="Orders">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="Featured" role="tabpanel" aria-labelledby="Featured">
+                            <div class="mg-checkout-tab-content1">
+                                <div class="mg-co-form">
+                                    <div class="mg-co-form-heading">
+                                        <h5>Add Information</h5>
+                                    </div>
+                                    <div class="mg-form-main">
+                                        <div class="row">
+                                            @*<input type="hidden" asp-for="UserID" class="form-control" value="@ViewBag.UserID">*@
+                                            <input type="hidden" asp-for="OrderDate" class="form-control" value="@ViewData["Date"]">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="mg-form-input-field">
+                                                    <input asp-for="Email" type="text" name="Email" placeholder="Email">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="mg-form-input-field">
+                                                    <input asp-for="Address" type="text" name="Address" placeholder="Address">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="mg-form-input-field">
+                                                    <input asp-for="Phone" type="text" name="Phone" placeholder="Phone">
+                                                </div>
+                                            </div>
+                                            @*<input type="hidden" asp-for="UserID" class="form-control" value="Total">*@
+                                        </div>
+                                    </div>
 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Bestseller" role="tabpanel">
+                        <div class="mg-checkout-tab-content3">
+                            <div class="mg-co-order-details">
+                                <div class="mg-co-order-details-heading">
+                                    <h5>Your order</h5>
+                                </div>
+                                <div class="mg-co-order-table">
+                                    <div class="mg-cpd-table table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>PRODUCTS</th>
+                                                    <th>QUANTITY</th>
+                                                    <th>SUBTOTAL</th>
+                                                    <th>TOTAL</th>
+                                                </tr>
+                                            </thead>
+                                            @foreach (var item in Model.CartItems)
+                                            {
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="mg-product-img-qyt">
+                                                                <div class="mg-cpd-qty">
+                                                                    <a href="#"><span>@item.ProductName</span></a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="mg-cpd-qty">
+                                                                <a href="#"><span>@item.Quantity</span></a>
+                                                            </div>
+                                                        </td>
+                                                        <td class="align-middle">
+                                                            <div class="mg-cpd-price">
+                                                                <a href="#"><span>@item.Price</span></a>
+                                                            </div>
+                                                        </td>
+                                                        <td class="align-middle">
+                                                            <div class="mg-cpd-price">
+                                                                <span>@Model.CartItems.Where(x => x.ProductId == item.ProductId).Sum(x => x.Quantity * x.Price).ToString("C", GlobalVariables.cul)</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            }
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="mg-form-submit-btn btn" onclick="window.location.href='/Cart/Thankyou'">CONFIRM</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--checkout tab section end here-->

@@ -60,7 +60,7 @@ namespace DoAnBanDienThoai.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CartCheckout([Bind("OrderID,UserID,CartItemId,Email,Address,Phone,Total,OrderDate")] Order order)
+        public async Task<IActionResult> CartCheckout([Bind("OrderID,UserID,CartItemId,Email,Address,Phone,OrderDate")] Order order)
         {
             if (ModelState.IsValid)
             {
@@ -71,6 +71,17 @@ namespace DoAnBanDienThoai.Controllers
             ViewData["UserID"] = new SelectList(_context.User, "UserID", "UserEmail", order.UserID);
             return View(order);
         }
+
+        //public IActionResult ThankYou()
+        //{
+        //    Order order = new()
+        //    {
+        //        OrderDate = DateTime.Now,
+        //        OrderID = _context.Order.
+
+        //    };
+        //    return View();
+        //}
 
         //// GET: Orders/Edit/5
         //public async Task<IActionResult> Edit(int? id)

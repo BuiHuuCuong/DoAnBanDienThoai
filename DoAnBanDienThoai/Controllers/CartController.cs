@@ -38,8 +38,6 @@ namespace DoAnBanDienThoai.Controllers
         {
             List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart") ?? new List<CartItem>();
 
-
-
             OrderViewModel cartVM = new()
             {
                 CartItems = cart,
@@ -51,6 +49,9 @@ namespace DoAnBanDienThoai.Controllers
 
         public async Task<IActionResult> SaveOrder(OrderViewModel.orderDTO orderViewModel)
         {
+            //ViewBag.UserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //ViewData["Date"] = DateTime.Now;
+            //ViewData[]
             List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart") ?? new List<CartItem>();
             var _user = _context.User.Where(m => m.UserEmail == orderViewModel.Email).FirstOrDefault();
             Order newOrder = new Order()
@@ -58,14 +59,20 @@ namespace DoAnBanDienThoai.Controllers
                 Address = orderViewModel.Address,
                 Email = orderViewModel.Email,
                 Phone = orderViewModel.Phone,
-                Total = cart.Sum(x => x.Quantity * x.Price),       
+                Total = cart.Sum(x => x.Quantity * x.Price),
                 CartItems = cart,
                 User = _user,
                 OrderDate = DateTime.Now
             };
             _context.Add(newOrder);
             await _context.SaveChangesAsync();
-            return View();
+
+            // Tạo đối tượng view model và truyền OrderDTO
+            OrderViewModel viewModel = new OrderViewModel();
+            viewModel.OrderDTO = orderViewModel;
+            viewModel.OrderDTO.OrderDate = newOrder.OrderDate;
+
+            return View(viewModel);
         }
 
         public IActionResult ThankYou()
