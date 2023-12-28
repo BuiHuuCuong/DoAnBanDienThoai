@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DoAnBanDienThoai.Data;
 using DoAnBanDienThoai.Models;
-using System.Security.Claims;
 
 namespace DoAnBanDienThoai.Controllers
 {
@@ -21,37 +20,35 @@ namespace DoAnBanDienThoai.Controllers
         }
 
         // GET: Orders
-        //public async Task<IActionResult> Index()
-        //{
-        //    var doAnBanDienThoaiContext = _context.Order.Include(o => o.CartItems).Include(o => o.User);
-        //    return View(await doAnBanDienThoaiContext.ToListAsync());
-        //}
+        public async Task<IActionResult> Index()
+        {
+            var doAnBanDienThoaiContext = _context.Order.Include(o => o.User);
+            return View(await doAnBanDienThoaiContext.ToListAsync());
+        }
 
-        //// GET: Orders/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null || _context.Order == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: Orders/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null || _context.Order == null)
+            {
+                return NotFound();
+            }
 
-        //    var order = await _context.Order
-        //        .Include(o => o.CartItems)
-        //        .Include(o => o.User)
-        //        .FirstOrDefaultAsync(m => m.OrderID == id);
-        //    if (order == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var order = await _context.Order
+                .Include(o => o.User)
+                .FirstOrDefaultAsync(m => m.OrderID == id);
+            if (order == null)
+            {
+                return NotFound();
+            }
 
-        //    return View(order);
-        //}
+            return View(order);
+        }
 
         // GET: Orders/Create
-        public IActionResult CartCheckout()
+        public IActionResult Create()
         {
-            ViewBag.UserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            ViewData["Date"] = DateTime.Now;
+            ViewData["UserID"] = new SelectList(_context.User, "UserID", "UserEmail");
             return View();
         }
 
@@ -60,126 +57,112 @@ namespace DoAnBanDienThoai.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CartCheckout([Bind("OrderID,UserID,CartItemId,Email,Address,Phone,OrderDate")] Order order)
+        public async Task<IActionResult> Create([Bind("OrderID,UserID,Email,Address,Phone,Total,OrderDate")] Order order)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(order);
                 await _context.SaveChangesAsync();
-                
-            }          
+                return RedirectToAction(nameof(Index));
+            }
             ViewData["UserID"] = new SelectList(_context.User, "UserID", "UserEmail", order.UserID);
             return View(order);
         }
 
-        //public IActionResult ThankYou()
-        //{
-        //    Order order = new()
-        //    {
-        //        OrderDate = DateTime.Now,
-        //        OrderID = _context.Order.
+        // GET: Orders/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null || _context.Order == null)
+            {
+                return NotFound();
+            }
 
-        //    };
-        //    return View();
-        //}
+            var order = await _context.Order.FindAsync(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            ViewData["UserID"] = new SelectList(_context.User, "UserID", "UserEmail", order.UserID);
+            return View(order);
+        }
 
-        //// GET: Orders/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null || _context.Order == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // POST: Orders/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("OrderID,UserID,Email,Address,Phone,Total,OrderDate")] Order order)
+        {
+            if (id != order.OrderID)
+            {
+                return NotFound();
+            }
 
-        //    var order = await _context.Order.FindAsync(id);
-        //    if (order == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    ViewData["CartItemId"] = new SelectList(_context.CartItem, "CartItemId", "CartItemId", order.CartItemId);
-        //    ViewData["UserID"] = new SelectList(_context.User, "UserID", "UserEmail", order.UserID);
-        //    return View(order);
-        //}
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(order);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!OrderExists(order.OrderID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["UserID"] = new SelectList(_context.User, "UserID", "UserEmail", order.UserID);
+            return View(order);
+        }
 
-        //// POST: Orders/Edit/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("OrderID,UserID,CartItemId,Email,Address,Phone,Total,OrderDate")] Order order)
-        //{
-        //    if (id != order.OrderID)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: Orders/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null || _context.Order == null)
+            {
+                return NotFound();
+            }
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(order);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!OrderExists(order.OrderID))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["CartItemId"] = new SelectList(_context.CartItem, "CartItemId", "CartItemId", order.CartItemId);
-        //    ViewData["UserID"] = new SelectList(_context.User, "UserID", "UserEmail", order.UserID);
-        //    return View(order);
-        //}
+            var order = await _context.Order
+                .Include(o => o.User)
+                .FirstOrDefaultAsync(m => m.OrderID == id);
+            if (order == null)
+            {
+                return NotFound();
+            }
 
-        //// GET: Orders/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null || _context.Order == null)
-        //    {
-        //        return NotFound();
-        //    }
+            return View(order);
+        }
 
-        //    var order = await _context.Order
-        //        .Include(o => o.CartItem)
-        //        .Include(o => o.User)
-        //        .FirstOrDefaultAsync(m => m.OrderID == id);
-        //    if (order == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // POST: Orders/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            if (_context.Order == null)
+            {
+                return Problem("Entity set 'DoAnBanDienThoaiContext.Order'  is null.");
+            }
+            var order = await _context.Order.FindAsync(id);
+            if (order != null)
+            {
+                _context.Order.Remove(order);
+            }
+            
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
-        //    return View(order);
-        //}
-
-        //// POST: Orders/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    if (_context.Order == null)
-        //    {
-        //        return Problem("Entity set 'DoAnBanDienThoaiContext.Order'  is null.");
-        //    }
-        //    var order = await _context.Order.FindAsync(id);
-        //    if (order != null)
-        //    {
-        //        _context.Order.Remove(order);
-        //    }
-
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
-
-        //private bool OrderExists(int id)
-        //{
-        //  return (_context.Order?.Any(e => e.OrderID == id)).GetValueOrDefault();
-        //}
+        private bool OrderExists(int id)
+        {
+          return (_context.Order?.Any(e => e.OrderID == id)).GetValueOrDefault();
+        }
     }
 }
