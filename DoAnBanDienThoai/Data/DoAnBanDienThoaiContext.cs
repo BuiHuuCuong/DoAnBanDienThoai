@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using DoAnBanDienThoai.Models;
+using Oracle.EntityFrameworkCore;
 
 namespace DoAnBanDienThoai.Data
 {
