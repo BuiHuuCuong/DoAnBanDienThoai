@@ -2316,6 +2316,16 @@ span.mg-views-text {
     font-family: sora-bold;
     color: #171717;
 }
+
+.mg-form-input-field-2 input[type="password"] {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    background-color: #eee;
+    font-size: 12px;
+    font-family: sora-bold;
+    color: #fff;
+}
 .mg-form-input-field {
     margin-bottom: 26px;
 }
