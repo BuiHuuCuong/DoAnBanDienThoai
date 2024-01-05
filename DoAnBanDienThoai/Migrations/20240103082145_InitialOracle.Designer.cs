@@ -3,17 +3,17 @@ using System;
 using DoAnBanDienThoai.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Oracle.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
 namespace DoAnBanDienThoai.Migrations
 {
     [DbContext(typeof(DoAnBanDienThoaiContext))]
-    [Migration("20231213062013_cartsection")]
-    partial class cartsection
+    [Migration("20240103082145_InitialOracle")]
+    partial class InitialOracle
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,20 +22,35 @@ namespace DoAnBanDienThoai.Migrations
                 .HasAnnotation("ProductVersion", "6.0.23")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("CartItemOrder", b =>
+                {
+                    b.Property<int>("CartItemsCartItemId")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<int>("OrderID")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.HasKey("CartItemsCartItemId", "OrderID");
+
+                    b.HasIndex("OrderID");
+
+                    b.ToTable("CartItemOrder");
+                });
 
             modelBuilder.Entity("DoAnBanDienThoai.Models.Brand", b =>
                 {
                     b.Property<int>("BrandId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BrandId"), 1L, 1);
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BrandId"), 1L, 1);
 
                     b.Property<string>("BrandName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("NVARCHAR2(50)");
 
                     b.HasKey("BrandId");
 
@@ -46,26 +61,26 @@ namespace DoAnBanDienThoai.Migrations
                 {
                     b.Property<int>("CartItemId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartItemId"), 1L, 1);
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartItemId"), 1L, 1);
 
                     b.Property<string>("Image")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("DECIMAL(18, 2)");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("ProductName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
                     b.HasKey("CartItemId");
 
@@ -76,14 +91,14 @@ namespace DoAnBanDienThoai.Migrations
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
 
                     b.Property<string>("CategoryName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("NVARCHAR2(50)");
 
                     b.HasKey("CategoryId");
 
@@ -94,23 +109,23 @@ namespace DoAnBanDienThoai.Migrations
                 {
                     b.Property<int>("ContactID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContactID"), 1L, 1);
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContactID"), 1L, 1);
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TIMESTAMP(7)");
 
                     b.Property<int>("UserID")
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("UserPhone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.HasKey("ContactID");
 
@@ -119,38 +134,74 @@ namespace DoAnBanDienThoai.Migrations
                     b.ToTable("Contact");
                 });
 
+            modelBuilder.Entity("DoAnBanDienThoai.Models.Order", b =>
+                {
+                    b.Property<int>("OrderID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(10)");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderID"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<DateTime?>("OrderDate")
+                        .HasColumnType("TIMESTAMP(7)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<decimal?>("Total")
+                        .HasColumnType("DECIMAL(18, 2)");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.HasKey("OrderID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Order");
+                });
+
             modelBuilder.Entity("DoAnBanDienThoai.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"), 1L, 1);
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"), 1L, 1);
 
                     b.Property<int>("BrandId")
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("ProductDescription")
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("NVARCHAR2(500)");
 
                     b.Property<string>("ProductImage")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("NVARCHAR2(50)");
 
                     b.Property<string>("ProductName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("NVARCHAR2(50)");
 
                     b.Property<decimal>("ProductPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("DECIMAL(18, 2)");
 
                     b.Property<int>("ProductQuantity")
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
                     b.HasKey("ProductId");
 
@@ -165,13 +216,13 @@ namespace DoAnBanDienThoai.Migrations
                 {
                     b.Property<int>("UserID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("NUMBER(10)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserID"), 1L, 1);
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserID"), 1L, 1);
 
                     b.Property<string>("UserEmail")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -180,20 +231,46 @@ namespace DoAnBanDienThoai.Migrations
 
                     b.Property<string>("UserPassword")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("UserRole")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.HasKey("UserID");
 
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("CartItemOrder", b =>
+                {
+                    b.HasOne("DoAnBanDienThoai.Models.CartItem", null)
+                        .WithMany()
+                        .HasForeignKey("CartItemsCartItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DoAnBanDienThoai.Models.Order", null)
+                        .WithMany()
+                        .HasForeignKey("OrderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DoAnBanDienThoai.Models.Contact", b =>
                 {
                     b.HasOne("DoAnBanDienThoai.Models.User", "User")
                         .WithMany("Contact")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DoAnBanDienThoai.Models.Order", b =>
+                {
+                    b.HasOne("DoAnBanDienThoai.Models.User", "User")
+                        .WithMany("Order")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -233,6 +310,8 @@ namespace DoAnBanDienThoai.Migrations
             modelBuilder.Entity("DoAnBanDienThoai.Models.User", b =>
                 {
                     b.Navigation("Contact");
+
+                    b.Navigation("Order");
                 });
 #pragma warning restore 612, 618
         }

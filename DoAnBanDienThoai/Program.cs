@@ -4,9 +4,13 @@ using DoAnBanDienThoai.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
+//builder.Services.AddDbContext<DoAnBanDienThoaiContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DoAnBanDienThoaiContext") ?? throw new InvalidOperationException("Connection string 'DoAnBanDienThoaiContext' not found.")));
 builder.Services.AddDbContext<DoAnBanDienThoaiContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DoAnBanDienThoaiContext") ?? throw new InvalidOperationException("Connection string 'DoAnBanDienThoaiContext' not found.")));
-
+{
+    options.UseOracle(builder.Configuration.
+        GetConnectionString("OraDbConnection"));
+});
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
