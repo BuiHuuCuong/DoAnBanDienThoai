@@ -72,6 +72,7 @@ namespace DoAnBanDienThoai.Controllers
             viewModel.OrderDTO = orderViewModel;
             viewModel.OrderDTO.OrderDate = newOrder.OrderDate;
 
+            HttpContext.Session.SetJson("Cart", new List<CartItem>());
             return View(viewModel);
         }
 

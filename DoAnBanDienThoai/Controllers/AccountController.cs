@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using DoAnBanDienThoai.Data;
+using System.Text.RegularExpressions;
 
 namespace DoAnBanDienThoai.Controllers
 {
@@ -129,7 +130,7 @@ namespace DoAnBanDienThoai.Controllers
             GlobalVariables.MyGlobalVariable = false;
             HttpContext.SignOutAsync(
             CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index", "Account");
+            return RedirectToAction("Login", "Account");
         }
 
         // GET: Users/Create
@@ -144,13 +145,33 @@ namespace DoAnBanDienThoai.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignUp([Bind("UserID,UserName,UserEmail,UserPassword,UserRole")] User user)
-        {   
+        {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
-                user.UserRole = "Customer";
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Login","Account");
+                // Kiểm tra tên user đã tồn tại hay chưa
+                var userExists = await _context.User.AnyAsync(u => u.UserEmail == user.UserEmail);
+
+                // Kiểm tra định dạng email
+                if (!Regex.IsMatch(user.UserEmail, @"^[^\s@]+@[^\s@]+\.com$"))
+                {
+                    ModelState.AddModelError("UserEmail", "Email sai định dạng");
+                    return View(user);
+                }
+
+                if (!userExists)
+                {
+                    // Thêm user vào cơ sở dữ liệu
+                    _context.Add(user);
+                    user.UserRole = "Customer";
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Login", "Account");
+                }
+                else
+                {
+                    // Tên user đã tồn tại
+                    ModelState.AddModelError("UserEmail", "User đã tồn tại hãy đặt tên khác");
+                    return View(user);
+                }
             }
             return View(user);
         }

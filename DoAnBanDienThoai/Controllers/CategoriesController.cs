@@ -60,8 +60,12 @@ namespace DoAnBanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(category);
-                await _context.SaveChangesAsync();
+                var exist = await _context.Category.Where(n => n.CategoryName == category.CategoryName).FirstAsync();
+                if ( exist == null) {
+                    _context.Add(category);
+                    await _context.SaveChangesAsync();
+                } 
+                
                 return RedirectToAction(nameof(Index));
             }
             return View(category);

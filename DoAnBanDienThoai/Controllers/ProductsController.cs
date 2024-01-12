@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DoAnBanDienThoai.Data;
 using DoAnBanDienThoai.Models;
+using System.Drawing.Drawing2D;
 
 namespace DoAnBanDienThoai.Controllers
 {
@@ -102,10 +103,16 @@ namespace DoAnBanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(product);
-                await _context.SaveChangesAsync();
+                var exist = await _context.Product.Where(n => n.ProductName == product.ProductName).FirstAsync();
+                if (exist == null)
+                {
+                    _context.Add(product);
+                    await _context.SaveChangesAsync();
+                }
                 return RedirectToAction(nameof(Index));
             }
+            return View(product);
+
             ViewData["BrandId"] = new SelectList(_context.Brand, "BrandId", "BrandName", product.BrandId);
             ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryName", product.CategoryId);
             return View(product);

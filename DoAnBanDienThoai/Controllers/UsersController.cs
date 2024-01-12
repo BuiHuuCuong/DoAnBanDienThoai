@@ -63,8 +63,12 @@ namespace DoAnBanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
+                var exist = await _context.User.Where(n => n.UserEmail == user.UserEmail).FirstAsync();
+                if (exist == null)
+                {
+                    _context.Add(user);
+                    await _context.SaveChangesAsync();
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(user);
