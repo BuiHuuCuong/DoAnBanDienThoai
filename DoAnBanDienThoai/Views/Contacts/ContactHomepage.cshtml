@@ -42,8 +42,8 @@
                             </div>
                             <div class="mg-contact-info-content">
                                 <h5>Phone Number</h5>
-                                <div><span>Mobile: +(1) 234 567 8900</span></div>
-                                <div><span>Fax: +(1) 234 567 8900</span></div>
+                                <div><span>Mobile: +(84) 33 800 9647</span></div>
+
                             </div>
                             <div class="mg-contact-info-content">
                                 <h5>Email Address</h5>
@@ -73,14 +73,14 @@
                                         <input type="hidden" asp-for="CreatedDate" class="form-control" value="@ViewData["Date"]">
                                         <div class="mg-form-input-field">
                                             <label asp-for="UserPhone" class="control-label"></label>
-                                            <input asp-for="UserPhone" class="form-control" />
+                                            <input asp-for="UserPhone" type = "number" class="form-control" required="required" />
                                             <span asp-validation-for="UserPhone" class="text-danger"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-15 col-md-15 col-sm-15">
                                         <div class="mg-form-textarea">
                                             <label asp-for="Content" class="control-label"></label>
-                                            <input asp-for="Content" class="form-control" />
+                                            <input asp-for="Content" class="form-control" required="required"/>
                                             <span asp-validation-for="Content" class="text-danger"></span>
                                         </div>
                                     </div>

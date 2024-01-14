@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DoAnBanDienThoai.Data;
 using DoAnBanDienThoai.Models;
+using System.Drawing.Drawing2D;
 
 namespace DoAnBanDienThoai.Controllers
 {
@@ -102,12 +103,26 @@ namespace DoAnBanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(product);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                // Check if the product name already exists
+                var exist = await _context.Product.FirstOrDefaultAsync(n => n.ProductName == product.ProductName);
+
+                if (exist == null)
+                {
+                    _context.Add(product);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    // Product name already exists, add a custom error message
+                    ModelState.AddModelError("ProductName", "Product name already exists.");
+                }
             }
+
+            // Populate ViewData before returning to the view
             ViewData["BrandId"] = new SelectList(_context.Brand, "BrandId", "BrandName", product.BrandId);
             ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryName", product.CategoryId);
+
             return View(product);
         }
 
@@ -145,8 +160,21 @@ namespace DoAnBanDienThoai.Controllers
             {
                 try
                 {
+                    // Check if the edited product name already exists for another product
+                    var nameExists = await _context.Product
+                        .AnyAsync(p => p.ProductName == product.ProductName && p.ProductId != product.ProductId);
+
+                    if (nameExists)
+                    {
+                        ModelState.AddModelError("ProductName", "Product name already exists.");
+                        ViewData["BrandId"] = new SelectList(_context.Brand, "BrandId", "BrandName", product.BrandId);
+                        ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryName", product.CategoryId);
+                        return View(product);
+                    }
+
                     _context.Update(product);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -159,10 +187,12 @@ namespace DoAnBanDienThoai.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
+
+            // Populate ViewData before returning to the view
             ViewData["BrandId"] = new SelectList(_context.Brand, "BrandId", "BrandName", product.BrandId);
             ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryName", product.CategoryId);
+
             return View(product);
         }
 

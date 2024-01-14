@@ -2307,16 +2307,17 @@ span.mg-views-text {
     font-family: sora-bold;
     font-size: 28px;
 }
-.mg-form-input-field-2 input[type="password"] {
+.mg-form-input-field input[type="text"] {
     width: 100%;
     padding: 16px;
     border: none;
+    background-color: #eee;
     font-size: 12px;
     font-family: sora-bold;
-    color: #fff;
+    color: #171717;
 }
 
-.mg-form-input-field input[type="text"] {
+.mg-form-input-field-2 input[type="password"] {
     width: 100%;
     padding: 16px;
     border: none;
@@ -3354,8 +3355,7 @@ a.mg-profile-shortcut {
     margin: 0;
 }
 .mg-co-form .mg-form-input-field input[type="text"] {
-    background-color: #fff
-    ;
+    background-color: #fff;
     border-bottom: 1px solid #eee;
 }
 .mg-co-form .mg-form-sub-heading {

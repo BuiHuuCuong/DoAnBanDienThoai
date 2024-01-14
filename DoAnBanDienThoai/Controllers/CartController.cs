@@ -49,9 +49,7 @@ namespace DoAnBanDienThoai.Controllers
 
         public async Task<IActionResult> SaveOrder(OrderViewModel.orderDTO orderViewModel)
         {
-            //ViewBag.UserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //ViewData["Date"] = DateTime.Now;
-            //ViewData[]
+          
             List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart") ?? new List<CartItem>();
             var _user = _context.User.Where(m => m.UserEmail == orderViewModel.Email).FirstOrDefault();
             Order newOrder = new Order()
@@ -72,6 +70,7 @@ namespace DoAnBanDienThoai.Controllers
             viewModel.OrderDTO = orderViewModel;
             viewModel.OrderDTO.OrderDate = newOrder.OrderDate;
 
+            HttpContext.Session.SetJson("Cart", new List<CartItem>());
             return View(viewModel);
         }
 

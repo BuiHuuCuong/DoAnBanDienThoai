@@ -9,6 +9,8 @@ using DoAnBanDienThoai.Data;
 using DoAnBanDienThoai.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace DoAnBanDienThoai.Controllers
 {
@@ -63,10 +65,34 @@ namespace DoAnBanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var userExist = await _context.User.FirstOrDefaultAsync(n => n.UserEmail == user.UserEmail);
+
+                if (userExist == null)
+                {
+                    // Hash mật khẩu bằng MD5
+                    using (MD5 md5 = MD5.Create())
+                    {
+                        byte[] hashedPassword = md5.ComputeHash(Encoding.UTF8.GetBytes(user.UserPassword));
+                        StringBuilder sb = new StringBuilder();
+
+                        for (int i = 0; i < hashedPassword.Length; i++)
+                        {
+                            sb.Append(hashedPassword[i].ToString("x2"));
+                        }
+
+                        user.UserPassword = sb.ToString();
+                    }
+
+                    _context.Add(user);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ModelState.AddModelError("UserEmail", "The user already exists, please give it a different name");
+                }
             }
+
             return View(user);
         }
 
@@ -102,7 +128,47 @@ namespace DoAnBanDienThoai.Controllers
             {
                 try
                 {
-                    _context.Update(user);
+                    // Retrieve the existing user from the database
+                    var existingUser = await _context.User.FindAsync(user.UserID);
+
+                    if (existingUser == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Check if the edited email already exists for another user
+                    var emailExists = await _context.User
+                        .AnyAsync(u => u.UserEmail == user.UserEmail && u.UserID != user.UserID);
+
+                    if (emailExists)
+                    {
+                        ModelState.AddModelError("UserEmail", "The changed email is already in use by another user.");
+                        return View(user);
+                    }
+
+                    // If a new password is provided, hash and update the password
+                    if (!string.IsNullOrEmpty(user.UserPassword))
+                    {
+                        using (MD5 md5 = MD5.Create())
+                        {
+                            byte[] hashedPassword = md5.ComputeHash(Encoding.UTF8.GetBytes(user.UserPassword));
+                            StringBuilder sb = new StringBuilder();
+
+                            for (int i = 0; i < hashedPassword.Length; i++)
+                            {
+                                sb.Append(hashedPassword[i].ToString("x2"));
+                            }
+
+                            existingUser.UserPassword = sb.ToString();
+                        }
+                    }
+
+                    // Update other properties of the user
+                    existingUser.UserName = user.UserName;
+                    existingUser.UserEmail = user.UserEmail;
+                    existingUser.UserRole = user.UserRole;
+
+                    _context.Update(existingUser);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -118,8 +184,10 @@ namespace DoAnBanDienThoai.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             return View(user);
         }
+
 
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)

@@ -29,7 +29,7 @@
                             <div class="mg-tabs-img">
                                 <a href="/Products/ProductDetails?id=@item.ProductId"><img src="~/@item.ProductImage" alt=""></a>
                             </div>
-                            <div class="mg-overlay">
+@*                            <div class="mg-overlay">
                                 <div class="mg-overlay-icon-box">
                                     <div class="mg-overlay-icon text-end">
                                         <a class="mg-quick-view-modal-btn" href="javascript:void(0);">
@@ -42,7 +42,7 @@
                                         </a>
                                     </div>
                                 </div>
-                            </div>
+                            </div>*@
                             <div class="mg-atc-overlay">
                                 <a asp-controller="Cart" asp-action="Add" asp-route-id="@item.ProductId">
                                     <div class="mg-cart-box">
@@ -56,11 +56,11 @@
                                 <div class="mg-small-heading">
                                     <a class="text-decoration-none" href="shop.html"><span>@item.Category.CategoryName</span></a>
                                 </div>
-                                <div class="mg-wishlist-icon">
+@*                                <div class="mg-wishlist-icon">
                                     <a href="javascript:void(0);">
                                         <img src="~/assets/images/icons/heart.svg" alt="">
                                     </a>
-                                </div>
+                                </div>*@
                             </div>
                             <a class="text-decoration-none" href="/Products/ProductDetails?id=@item.ProductId"><h5>@item.ProductName</h5></a>
                             <div class="mg-pricing">@item.ProductPrice</div>
@@ -72,7 +72,7 @@
     </div>
 </div>
 <!--grid section end here-->
-<!--Category top rated products and text overlay section start here-->
+@*<!--Category top rated products and text overlay section start here-->
 <div>
     <div class="container">
         <div class="mg-custom-section2">
@@ -168,3 +168,4 @@
     </div>
 </div>
 <!--Category top rated products and text overlay section end here-->
+*@
