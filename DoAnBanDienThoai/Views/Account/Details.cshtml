@@ -78,7 +78,6 @@
                                 </div>
                             </div>
 
-                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="mg-form-input-field-2">
                                     @*<input type="text" placeholder="New password">*@
@@ -87,28 +86,11 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="mg-form-input-field-2">
-                                    <input style="margin-top: 5%;color: #000" name="UserPassword" type="password" id="confirmed_pass" class="form-control" placeholder="Confirme password">
+                                    <input style="margin-top: 5%;color: #000" name="UserPassword" type="password" id="confirmed_pass" class="form-control" placeholder="Confirm password">
                                     <span id='message'></span>
                                 </div>
                             </div>
                         </div>
-                        <script type="text/javascript">
-                            var current_passw = @Model.UserPassword;
-                            $('#password, #confirmed_pass, #current_pass').on('keyup', function () {
-                                if ($('#current_pass').val() != current_passw) {
-                                    document.getElementById("change_detail").disabled = true;
-                                    $('#message').html('Current password does not match');
-                                }
-                                else if ($('#password').val() == $('#confirmed_pass').val()) {
-                                    $('#message').html('Valid');
-                                    document.getElementById("change_detail").disabled = false;
-                                } else {
-                                    document.getElementById("change_detail").disabled = true;
-                                    $('#message').html('New password does not match');
-                                }
-                            });
-                            
-                        </script>
                         <div class="mg-form-submit-btn">
                             <button onclick="check" id="change_detail" type="submit" value="Save" class="btn">
                                 SAVE CHANGES
@@ -176,3 +158,35 @@
 </body>
 <!-- Mirrored from premium-html-templates.mgtechnologies.co.in/mg-wirez/my-account.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Apr 2023 10:27:36 GMT -->
 </html>
+
+<script>
+    $(document).ready(function () {
+        // Assuming `current_passw` is defined elsewhere with the correct value
+
+        $(document).on('keyup', '#password, #confirmed_pass, #current_pass', function () {
+          
+
+            let currentPass = $('#current_pass').val();
+            let newPassword = $('#password').val();
+            let confirmedPassword = $('#confirmed_pass').val();
+
+            try {
+                if ($('#current_pass').val().trim() === '') {
+                    $('#message').html('Please fill all fields');
+                    $('#change_detail').prop('disabled', true);
+                } else 
+                if (newPassword === confirmedPassword) {
+                    $('#message').html('Valid');
+                    $('#change_detail').prop('disabled', false);
+                } else {
+                    $('#message').html('New password does not match');
+                    $('#change_detail').prop('disabled', true);
+                }
+            } catch (error) {
+                console.error('Error during password validation:', error);
+                $('#message').html('An error occurred. Please try again.');
+            }
+        });
+    });
+                                //# sourceURL=passwordcheck.js
+</script>

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DoAnBanDienThoai.Data;
 using DoAnBanDienThoai.Models;
+using System.Drawing.Drawing2D;
 
 namespace DoAnBanDienThoai.Controllers
 {
@@ -60,14 +61,26 @@ namespace DoAnBanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
-                var exist = await _context.Category.Where(n => n.CategoryName == category.CategoryName).FirstAsync();
-                if ( exist == null) {
+                
+                var exist = await _context.Category
+                    .Where(n => n.CategoryName == category.CategoryName)
+                    .FirstOrDefaultAsync();
+
+                if (exist == null)
+                {
+                    
                     _context.Add(category);
                     await _context.SaveChangesAsync();
-                } 
-                
-                return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    // Category name already exists, add a custom error message
+                    ModelState.AddModelError("CategoryName", "Category name already exists.");
+                }
             }
+
+            // If ModelState is not valid, or category name already exists, return to the view with the model
             return View(category);
         }
 
@@ -103,8 +116,19 @@ namespace DoAnBanDienThoai.Controllers
             {
                 try
                 {
+                    // Check if the edited category name already exists for another category
+                    var nameExists = await _context.Category
+                        .AnyAsync(c => c.CategoryName == category.CategoryName && c.CategoryId != category.CategoryId);
+
+                    if (nameExists)
+                    {
+                        ModelState.AddModelError("CategoryName", "Category name already exists.");
+                        return View(category);
+                    }
+
                     _context.Update(category);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -117,8 +141,8 @@ namespace DoAnBanDienThoai.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
+
             return View(category);
         }
 

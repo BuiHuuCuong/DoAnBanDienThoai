@@ -60,14 +60,26 @@ namespace DoAnBanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
-                var exist = await _context.Brand.Where(n => n.BrandName == brand.BrandName).FirstAsync();
+                // Check if the brand name already exists
+                var exist = await _context.Brand
+                    .Where(n => n.BrandName == brand.BrandName)
+                    .FirstOrDefaultAsync();
+
                 if (exist == null)
                 {
+                    // Brand does not exist, proceed with adding to the database
                     _context.Add(brand);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
+                else
+                {
+                    // Brand name already exists, add a custom error message
+                    ModelState.AddModelError("BrandName", "Brand name already exists.");
+                }
             }
+
+            // If ModelState is not valid, or brand name already exists, return to the view with the model
             return View(brand);
         }
 
@@ -101,24 +113,39 @@ namespace DoAnBanDienThoai.Controllers
 
             if (ModelState.IsValid)
             {
-                try
+                // Check if the brand name already exists
+                var exist = await _context.Brand
+                    .Where(n => n.BrandName == brand.BrandName && n.BrandId != brand.BrandId)
+                    .FirstOrDefaultAsync();
+
+                if (exist == null)
                 {
-                    _context.Update(brand);
-                    await _context.SaveChangesAsync();
+                    try
+                    {
+                        _context.Update(brand);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!BrandExists(brand.BrandId))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!BrandExists(brand.BrandId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    // Brand name already exists for another brand, add a custom error message
+                    ModelState.AddModelError("BrandName", "Brand name already exists.");
                 }
-                return RedirectToAction(nameof(Index));
             }
+
+            // If ModelState is not valid or brand name already exists, return to the view with the model
             return View(brand);
         }
 

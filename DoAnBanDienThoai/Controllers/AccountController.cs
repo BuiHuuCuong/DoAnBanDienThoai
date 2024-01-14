@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using DoAnBanDienThoai.Data;
 using System.Text.RegularExpressions;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace DoAnBanDienThoai.Controllers
 {
@@ -44,6 +46,7 @@ namespace DoAnBanDienThoai.Controllers
             {
                 return NotFound();
             }
+
             if (user.UserPassword == null)
             {
                 var _user = _context.User.Where(m => m.UserID == user.UserID).FirstOrDefault();
@@ -51,6 +54,23 @@ namespace DoAnBanDienThoai.Controllers
                 ModelState.Clear();
                 _context.Entry(_user).State = EntityState.Detached;
             }
+            else
+            {
+                // Hash mật khẩu bằng MD5
+                using (MD5 md5 = MD5.Create())
+                {
+                    byte[] hashedPassword = md5.ComputeHash(Encoding.UTF8.GetBytes(user.UserPassword));
+                    StringBuilder sb = new StringBuilder();
+
+                    for (int i = 0; i < hashedPassword.Length; i++)
+                    {
+                        sb.Append(hashedPassword[i].ToString("x2"));
+                    }
+
+                    user.UserPassword = sb.ToString();
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 try
@@ -71,6 +91,7 @@ namespace DoAnBanDienThoai.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             return View(user);
         }
         private bool UserExists(int id)
@@ -85,6 +106,19 @@ namespace DoAnBanDienThoai.Controllers
         [HttpPost]
         public IActionResult Login(User _userFromPage)
         {
+            //Hash mật khẩu đến trang đăng nhập
+           using (MD5 md5 = MD5.Create())
+            {
+                byte[] hashedPassword = md5.ComputeHash(Encoding.UTF8.GetBytes(_userFromPage.UserPassword));
+                StringBuilder sb = new StringBuilder();
+
+                for (int i = 0; i < hashedPassword.Length; i++)
+                {
+                    sb.Append(hashedPassword[i].ToString("x2"));
+                }
+
+                _userFromPage.UserPassword = sb.ToString();
+            }
             var _user = _context.User.Where(m => m.UserEmail == _userFromPage.UserEmail && m.UserPassword == _userFromPage.UserPassword).FirstOrDefault();
             if (_user == null)
             {
@@ -154,12 +188,25 @@ namespace DoAnBanDienThoai.Controllers
                 // Kiểm tra định dạng email
                 if (!Regex.IsMatch(user.UserEmail, @"^[^\s@]+@[^\s@]+\.com$"))
                 {
-                    ModelState.AddModelError("UserEmail", "Email sai định dạng");
+                    ModelState.AddModelError("UserEmail", "Email format is wrong !!!");
                     return View(user);
                 }
 
                 if (!userExists)
                 {
+                    // Hash mật khẩu bằng MD5
+                    using (MD5 md5 = MD5.Create())
+                    {
+                        byte[] hashedPassword = md5.ComputeHash(Encoding.UTF8.GetBytes(user.UserPassword));
+                        StringBuilder sb = new StringBuilder();
+
+                        for (int i = 0; i < hashedPassword.Length; i++)
+                        {
+                            sb.Append(hashedPassword[i].ToString("x2"));
+                        }
+
+                        user.UserPassword = sb.ToString();
+                    }
                     // Thêm user vào cơ sở dữ liệu
                     _context.Add(user);
                     user.UserRole = "Customer";
@@ -169,7 +216,7 @@ namespace DoAnBanDienThoai.Controllers
                 else
                 {
                     // Tên user đã tồn tại
-                    ModelState.AddModelError("UserEmail", "User đã tồn tại hãy đặt tên khác");
+                    ModelState.AddModelError("UserEmail", "The User already exists, please give it a different name !!!");
                     return View(user);
                 }
             }
